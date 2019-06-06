@@ -3,7 +3,7 @@
 
 <head>
   <meta charset=utf-8 />
-  <title>US Unemployment</title>
+  <title>USAW National Championship participation</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
@@ -13,7 +13,7 @@
     body {
             margin: 0;
             padding: 0;
-            background: whitesmoke;
+            background: #152C53;
             font-family: Lato, sans-serif;
             color: #0D0000;
         }
@@ -21,14 +21,17 @@
         h1 {
           position: absolute;
           z-index: 650;
-          top: 10px;
+          top: 0px;
           left: 60px;
-          padding: 8px 15px;
+          right: 60px;
+          padding: 10px 10px;
           margin: 0;
           color: whitesmoke;
           font-size: 1.5em;
-          background: rgba(25,25,25,0.8);
-          border-radius: 5px;
+          text-align: center;
+          background: #152C53;
+          border-radius: 0px;
+          
         }
 
         h2 {
@@ -38,9 +41,14 @@
 
         #map {
             position: absolute;
-            width: 100%;
+            left: 60px;
+            right: 60px;
             top: 0;
             bottom: 0;
+        }
+
+        .subtitle {
+            font-size: .5em;
         }
 
         footer {
@@ -121,10 +129,10 @@
 </head>
 
 <body>
-  <h1>United States Unemployment Rates: 2006 &ndash; 2015</h1>
+  <h1>Where are strongest Weightlifters in America From? <br> <span style="font-size:small">USAW National Championship Participation by State: 2014-2019</span></h1>
   <div id="map"></div>
   <div id="ui-controls">
-    <label><span class="min">2006</span><span class="max">2015</span>
+    <label><span class="min"></span><span class="max"></span>
     <input type="range" min="2006" , max="2015" , value="2006" , step="1" class="year-slider"></input>
     </label>
   </div>
@@ -154,184 +162,59 @@
       ext: 'png'
     }).addTo(map);
 
-    /*// AJAX request for GeoJSON data
-    $.getJSON("data/us-counties.json", function(counties) {
+    // AJAX request for GeoJSON data
+    $.getJSON("data/states.geojson", function(states) {
+        Papa.parse('data/participation-by-state.csv', {
 
-      Papa.parse('data/us-unemployment-counties.csv', {
+          download: true,
+          header: true,
+          complete: function (data) {
 
-        download: true,
-        header: true,
-        complete: function(data) {
-          // data is accessible to us here
-          //console.log('data: ', data);
+            // data is accessible to us here
+            //console.log('data: ', data);
 
-          // note that counties is also accessible here!
-          //console.log('counties: ', counties);
-          processData(counties, data);
-        } // end function(data)
+            // note that counties is also accessible here!
+            //console.log('states: ', states);
+
+        }
       }); // end of Papa.parse()
+      
+  
+    })
+    .fail(function() {
+      console.log("the data file failed to load")
     }); // end of $.getJSON()
 
-    function processData(counties, data) {
-      //outer loop
-      for (var i = 0; i < counties.features.length; i++) {
-        // short-hand reference to county properties
-        var props = counties.features[i].properties;
-        //var fip = STATE_FIP + COUNTY_FIP
-        // for each of the CSV data rows
-        for (var j = 0; j < data.data.length; j++) {
-          // if the county fips code and data fips code match
-          if (props.GEOID === data.data[j].STATE_FIP+data.data[j].COUNTY_FIP) {
-            // re-assign the data for that county as the county's props
-            counties.features[i].properties = data.data[j];
-            //break from inner loop
-            break;
-          } //end of if
-        } // end of inner loop
-      } //end of outer loop
+    //function processData(states) {
+      //drawMap(states);
+  
+    //}
 
-      // empty array to store all the data values - need for colorize
-      var rates = [];
-      // iterate through all the counties
-      counties.features.forEach(function(county) {
-        // iterate through all the props of each county
-        for (var prop in county.properties) {
-          // if the attribute is a number and not one of the fips codes or name
-          if (+prop) {
-            // push that attribute value into the array and change to numeric
-            rates.push(+county.properties[prop]);
-          } //end if
-        } // end loop
-      });
-
-      //determine class breaks
-      var breaks = chroma.limits(rates, 'k', 5);
-      // create color generator function
-      var colorize = chroma.scale(chroma.brewer.YlOrRd).classes(breaks).mode('lab');
-      //var color = colorize(20);
-      //console.log(color);
-      drawMap(counties, colorize);
-      drawLegend(breaks, colorize);
-
-    }
-
-    function drawMap(counties, colorize, currentYear) {
+    //function drawMap(states) {
 
       // create Leaflet object with geometry data and add to map
-      var dataLayer = L.geoJson(counties, {
-        style: function(feature) {
+      //var dataLayer = L.geoJson(counties, {
+        //style: function(feature) {
 
-          return {
-            color: '#1e1e1e',
-            weight: 1,
-            fillOpacity: 1,
-            fillColor: 'blue'
-          };
-        },
-        onEachFeature: function(feature, layer) {
+          //return {
+            //color: '#1e1e1e',
+            //weight: 1,
+            //fillOpacity: 1,
+            //fillColor: 'blue'
+          //};
+       // },
+      //}).addTo(map);
+    //} // end function drawMap()
 
-          // when mousing over a layer
-          layer.on('mouseover', function() {
-
-            // change the stroke color and bring that element to the front
-            layer.setStyle({
-              color: '#ff6e00'
-            }).bringToFront();
-          });
-
-          // on mousing off layer
-          layer.on('mouseout', function() {
-
-            // reset the layer style to its original stroke color
-            layer.setStyle({
-              color: '#1e1e1e'
-            });
-          });
- 
-        }
-      }).addTo(map);
-      // first set the zoom/center to the dataLayer's extent
-      //map.fitBounds(dataLayer.getBounds());
-      //map.setZoom(map.getZoom() - .2);
-
-      updateMap(dataLayer, colorize, '2006');
-      createSliderUI(dataLayer, colorize);
-    } // end function drawMap()
-
-    function updateMap(dataLayer, colorize, currentYear) {
-      //loop through each county
-      dataLayer.eachLayer(function(layer) {
-
-        var props = layer.feature.properties;
-        // set the fill color of layer based on its normalized data value
-        layer.setStyle({
-          fillColor: colorize(Number(props[currentYear]))
-        });
-
-        layer.bindTooltip("<b>" + layer.feature.properties.NAME + "</b><br>" +
-            layer.feature.properties[currentYear] + "% unemployment rate");
-      })
+    function updateMap() {
+      
     }// end updateMap()
 
-      function drawLegend(breaks, colorize) {
-        // create a Leaflet control for the legend
-        var legendControl = L.control({
-          position: 'topright'
-        });
-        // when the control is added to the map
-        legendControl.onAdd = function(map) {
-          // create a new div element with class of 'legend' and return
-          var legend = L.DomUtil.create('div', 'legend');
-          return legend;
-
-        };
-
-        legendControl.addTo(map);
-        //make title and start unordered list
-        var legend = $('.legend').html("<h3><span>2006</span> Unemployment Rates</h3><ul>");
-
-        for (var i = 0; i < breaks.length - 1; i++) {
-
-          var color = colorize(breaks[i], breaks);
-
-          var classRange = '<li><span style="background:' + color + '"></span> ' +
-            breaks[i].toLocaleString() + ' &mdash; ' +
-            breaks[i + 1].toLocaleString() + '%</li>'
-
-          $('.legend ul').append(classRange);
-        }
-        //close unordered list
-        legend.append("</ul>");
-
+    function drawLegend() {
+        
       } // end drawLegend()
 
-      function createSliderUI(dataLayer, colorize) {
-        //create leaflet control for the slider
-        var sliderControl = L.control({
-          position: 'bottomleft'
-        });
-        // when added to map
-        sliderControl.onAdd = function(map) {
-          // select an existing DOM element with id of 'ui-controls'
-          var slider = L.DomUtil.get("ui-controls");
-          // disable scrolling of the map while using controls
-          L.DomEvent.disableScrollPropagation(slider);
-          // disable click events while using control
-          L.DomEvent.disableClickPropagation(slider);
-          // return the slider from the onAdd method
-          return slider;
-        }
-
-        sliderControl.addTo(map);
-
-        // select the form element
-        $(".year-slider")
-          .on("input change", function() {
-            var currentYear = this.value;
-            $('.legend h3 span').html(currentYear);
-            updateMap(dataLayer, colorize, currentYear);
-
-          });
+      function createSliderUI() {
 
       } // end createSliderUI()*/
 
