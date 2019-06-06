@@ -170,25 +170,40 @@
           header: true,
           complete: function (data) {
 
-            // data is accessible to us here
-            //console.log('data: ', data);
-
-            // note that counties is also accessible here!
-            //console.log('states: ', states);
+            processData(states, data);
 
         }
+
       }); // end of Papa.parse()
       
-  
-    })
+     })
+
     .fail(function() {
       console.log("the data file failed to load")
     }); // end of $.getJSON()
 
-    //function processData(states) {
-      //drawMap(states);
-  
-    //}
+    function processData(states, data) {
+      // loop through all the states
+      for (var i = 0; i < states.features.length; i++) {
+
+        // short-hand reference to state properties
+        var props = states.features[i].properties;
+
+        // for each of the CSV data rows
+        for (var j = 0; j < data.data.length; j++) {
+
+          // if the state fips code and data fips code match
+          if (props.STATEFP === data.data[j].STATE_FIP) {
+            //reassign the data for that state as the state's properties
+            states.features[i].properties = data.data[j];
+            // end loop
+            break;
+        
+          } //end reassign
+        } //end inner loop
+      } // end outer loop
+      console.log('after: ', states);
+    } //end function processData
 
     //function drawMap(states) {
 
