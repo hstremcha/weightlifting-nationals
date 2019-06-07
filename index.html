@@ -19,32 +19,29 @@
         }
 
         h1 {
-          position: absolute;
+          display: inline-block;
           z-index: 650;
           top: 0px;
-          left: 60px;
-          right: 60px;
+          left: 0px;
+          right: 0px;
           padding: 10px 10px;
-          margin: 0;
           color: whitesmoke;
-          font-size: 1.5em;
-          text-align: center;
+          font-size: 2em;
           background: #152C53;
           border-radius: 0px;
+          text-align: center;
           
         }
 
         h2 {
             display: inline-block;
-            color: #001323;
+            color: white;
         }
 
         #map {
-            position: absolute;
-            left: 60px;
-            right: 60px;
-            top: 0;
-            bottom: 0;
+            width: 100%;
+            height: 720px;
+
         }
 
         .subtitle {
@@ -99,27 +96,67 @@
             float: left;
             margin-right: 10px;
         }
-        #ui-controls {
-            width: 176px;
-            padding: 8px 25px 8px 15px;
-            background: rgba(75, 75, 75, 0.8);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
-            color: whitesmoke;
+        .ui-controls {
+          width: 100%;
+          padding: 8px 25px 8px 15px;
+          z-index: 650;
+          overflow: hidden;
+
         }
 
-        #ui-controls .min {
+        .ui-controls input{
+          	position: absolute !important;
+            clip: rect(0, 0, 0, 0);
+            height: 1px;
+            width: 1px;
+            border: 0;
+            overflow: hidden;
+        }
+
+        .ui-controls label {
+          	position: relative;
+            background-color: white;
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 14px;
+            line-height: 2;
+            width: 100%;
+            text-align: center;
+            padding: 8px 16px;
+            margin-right: -1px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+            transition: all 0.1s ease-in-out;
+        
+        }
+
+         .ui-controls label:hover {
+          cursor: pointer;
+        }
+
+        .ui-controls input:checked + label {
+          background-color: red;
+          box-shadow: none;
+        }
+
+        .ui-controls label:first-of-type {
+          border-radius: 4px 0 0 4px;
+        }
+
+        .ui-controls label:last-of-type {
+          border-radius: 0 4px 4px 0;
+        }
+        .subtitle .min {
             float: left;
         }
 
-        #ui-controls .max {
+        .ui-controls .max {
             float: right;
             margin-right: -15px;
         }
 
         .year-slider {
             width: 100%;
-        }
+        }*/
 
         label {
             font-size: 1.1em;
@@ -129,13 +166,28 @@
 </head>
 
 <body>
-  <h1>Where are strongest Weightlifters in America From? <br> <span style="font-size:small">USAW National Championship Participation by State: 2014-2019</span></h1>
+  <header>
+  <h1>Where are strongest Weightlifters in America From?</h1><br>
+  <h2>USAW National Championship Participation by State: 2014-2019</h2>
+</header>
+<section>
   <div id="map"></div>
-  <div id="ui-controls">
-    <label><span class="min"></span><span class="max"></span>
-    <input type="range" min="2006" , max="2015" , value="2006" , step="1" class="year-slider"></input>
-    </label>
+  <div class="ui-controls">
+    <input type="radio" id="radio-one" name="switch-one" checked="checked" />
+    <label for="radio-one">2014</label>
+    <input type="radio" id="radio-two" name="switch-one"  />
+    <label for="radio-two">2015</label>
+    <input type="radio" id="radio-three" name="switch-one" />
+    <label for="radio-three">2016</label>
+    <input type="radio" id="radio-four" name="switch-one"/>
+    <label for="radio-four">2017</label>
+    <input type="radio" id="radio-five" name="switch-one"  />
+    <label for="radio-five">2018</label>
+    <input type="radio" id="radio-six" name="switch-one" />
+    <label for="radio-six">2019</label>
   </div>
+  </section>
+  
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
@@ -147,9 +199,9 @@
       scrollWheelZoom: true,
       zoomSnap: .1,
       dragging: true,
-      zoomControl: true,
+      zoomControl: false,
       center: [38, -98],
-      zoom: 4.5
+      zoom: 4
     }
 
     // create the Leaflet map
@@ -161,6 +213,10 @@
       subdomains: 'abcd',
       ext: 'png'
     }).addTo(map);
+
+    var zoom = L.control.zoom({
+         position: 'bottomleft'
+         }).addTo(map);
 
     // AJAX request for GeoJSON data
     $.getJSON("data/states.geojson", function(states) {
@@ -202,36 +258,100 @@
           } //end reassign
         } //end inner loop
       } // end outer loop
-      console.log('after: ', states);
+      
+      // empty array to store all the data values
+      var rates = [];
+
+      // iterate through all the states
+      states.features.forEach(function (state) {
+
+        // iterate through all the props of each state
+        for (var prop in state.properties) {
+
+          // if the attribute is a number and not one of the fips codes or name
+          if(+prop)  {
+
+            // push that attribute value into the array
+            rates.push(+state.properties[prop]);
+          } //end if
+        }// end loop
+      });
+      var breaks = chroma.limits(rates, 'k', 5);
+
+      var colorize = chroma.scale(chroma.brewer.Blues).classes(breaks).mode('lab');
+      drawMap(states, colorize);
+      drawLegend(breaks, colorize);
     } //end function processData
 
-    //function drawMap(states) {
+    function drawMap(states, colorize) {
 
       // create Leaflet object with geometry data and add to map
-      //var dataLayer = L.geoJson(counties, {
-        //style: function(feature) {
+      var dataLayer = L.geoJson(states, {
+        style: function(feature) {
 
-          //return {
-            //color: '#1e1e1e',
-            //weight: 1,
-            //fillOpacity: 1,
-            //fillColor: 'blue'
-          //};
-       // },
-      //}).addTo(map);
-    //} // end function drawMap()
+          return {
+           color: '#1e1e1e',
+           weight: 1,
+           fillOpacity: 1,
+           fillColor: 'blue'
+          };
+       },
+      }).addTo(map);
+      updateMap(dataLayer, colorize, '2014');
+      createButtonUI(dataLayer, colorize);
+     
+    } // end function drawMap()
 
-    function updateMap() {
-      
+    function updateMap(dataLayer, colorize, currentYear) {
+      //loop through each county
+      dataLayer.eachLayer(function (layer) {
+
+        var props = layer.feature.properties;
+        // set the fill color of layer based on its normalized data value
+        layer.setStyle({
+          fillColor: colorize(Number(props[currentYear]))
+        });
+      }) 
     }// end updateMap()
 
-    function drawLegend() {
-        
+    function drawLegend(breaks, colorize) {
+        var legendControl = L.control({
+        position: 'bottomright'
+      });
+      legendControl.onAdd = function (map) {
+
+        var legend = L.DomUtil.create('div', 'legend');
+        return legend;
+
+      };
+
+      legendControl.addTo(map);
+        var legend = $('.legend').html("<h3><span>2014</span> # Weightlifters per State at Nationals</h3><ul>");
+
+      for (var i = 0; i < breaks.length - 1; i++) {
+
+        var color = colorize(breaks[i], breaks);
+
+        var classRange = '<li><span style="background:' + color + '"></span> ' +
+          breaks[i].toLocaleString() + ' &mdash; ' +
+          breaks[i + 1].toLocaleString() + '</li>'
+
+        $('.legend ul').append(classRange);
+      }
+
+      legend.append("</ul>");
+
       } // end drawLegend()
 
-      function createSliderUI() {
-
-      } // end createSliderUI()*/
+      function createButtonUI(dayaLayer, colorize) {
+        var buttonControl = L.control({
+          position: 'topleft'
+        });
+        buttonControl.onAdd = function(map){
+          return L.DomUtil.get("ui-controls");
+          selectControl.addTo(map);
+        }
+      } // end createSliderUI()
 
 
 
