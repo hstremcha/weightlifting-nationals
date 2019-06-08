@@ -17,7 +17,9 @@
             font-family: Lato, sans-serif;
             color: #0D0000;
         }
-
+    header {
+          width: 100%;
+    }
         h1 {
           display: inline-block;
           z-index: 650;
@@ -96,62 +98,31 @@
             float: left;
             margin-right: 10px;
         }
-       /* #ui-controls {
-          width: 100%;
-          padding: 8px 25px 8px 15px;
-          z-index: 650;
-          overflow: hidden;
 
-        }
-
-        #ui-controls input{
-            /*position: absolute !important;
-            clip: rect(0, 0, 0, 0);
-            height: 1px;
-            width: 1px;
-            border: 0;
-            overflow: hidden;
-        }
-
-        #ui-controls label {
-          	position: relative;
-            background-color: white;
-            color: rgba(0, 0, 0, 0.6);
-            font-size: 14px;
-            line-height: 2;
-            width: 100%;
-            text-align: center;
-            padding: 8px 16px;
-            margin-right: -1px;
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
-            transition: all 0.1s ease-in-out;
-        
-        }
-
-         #ui-controls label:hover {
-          cursor: pointer;
-        }
-
-        #ui-controls input:checked + label {
-          background-color: red;
-          box-shadow: none;
-        }
-
-        #ui-controls label:first-of-type {
-          border-radius: 4px 0 0 4px;
-        }
-
-        #ui-controls label:last-of-type {
-          border-radius: 0 4px 4px 0;
-        }*/
         .subtitle .min {
             float: left;
         }
 
-        .ui-controls .max {
+        #ui-controls {
+            width: 100%;
+            padding: 8px 25px 8px 15px;
+            background: rgba(75, 75, 75, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            color: whitesmoke;
+        }
+
+        #ui-controls .min {
+            float: left;
+        }
+
+        #ui-controls .max {
             float: right;
             margin-right: -15px;
+        }
+
+        .year-slider {
+            width: 100%;
         }
 
         label {
@@ -169,18 +140,8 @@
 <section>
   <div id="map"></div>
   <div id ="ui-controls">
-    <input type="radio" id="radio-one" name="switch-one" checked="checked" />
-    <label for="radio-one">2014</label>
-    <input type="radio" id="radio-two" name="switch-one"  />
-    <label for="radio-two">2015</label>
-    <input type="radio" id="radio-three" name="switch-one" />
-    <label for="radio-three">2016</label>
-    <input type="radio" id="radio-four" name="switch-one"/>
-    <label for="radio-four">2017</label>
-    <input type="radio" id="radio-five" name="switch-one"  />
-    <label for="radio-five">2018</label>
-    <input type="radio" id="radio-six" name="switch-one" />
-    <label for="radio-six">2019</label>
+    <input type="range" min="2014", max="2019", step="1" class="year-slider" >
+    
   </div>
   </section>
   
@@ -294,7 +255,7 @@
        },
       }).addTo(map);
       updateMap(dataLayer, colorize, '2014');
-      //addUI()
+      addUI(dataLayer, colorize);
      
     } // end function drawMap()
 
@@ -339,17 +300,26 @@
 
       } // end drawLegend()
 
-      function addUI() {
-        var buttonControl = L.control({
+      function addUI(dataLayer, colorize) {
+        var sliderControl = L.control({
           position: 'topleft'
         });
 
-        buttonControl.onAdd = function(map) {
-          var button = L.DomUtil.get("ui-controls");
-          return button;
+        sliderControl.onAdd = function(map) {
+          var slider = L.DomUtil.get("ui-controls");
+          // disable scrolling of the map while using controls
+          L.DomEvent.disableScrollPropagation(slider);
+          // disable click events while using control
+         L.DomEvent.disableClickPropagation(slider);
+          return slider;
         }
-
-        buttonControl.addTo(map);
+        $("year-slider")
+          .on("input change", function(){
+            var currentYear = this.value
+            $('.legend h3 span').html(currentYear);
+            updateMap(dataLayer, colorize, currentYear);
+          });
+        sliderControl.addTo(map);
 
       } // end createSliderUI()*/
 
