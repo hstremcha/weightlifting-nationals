@@ -96,7 +96,7 @@
             float: left;
             margin-right: 10px;
         }
-        .ui-controls {
+       /* #ui-controls {
           width: 100%;
           padding: 8px 25px 8px 15px;
           z-index: 650;
@@ -104,8 +104,8 @@
 
         }
 
-        .ui-controls input{
-          	position: absolute !important;
+        #ui-controls input{
+            /*position: absolute !important;
             clip: rect(0, 0, 0, 0);
             height: 1px;
             width: 1px;
@@ -113,7 +113,7 @@
             overflow: hidden;
         }
 
-        .ui-controls label {
+        #ui-controls label {
           	position: relative;
             background-color: white;
             color: rgba(0, 0, 0, 0.6);
@@ -129,22 +129,22 @@
         
         }
 
-         .ui-controls label:hover {
+         #ui-controls label:hover {
           cursor: pointer;
         }
 
-        .ui-controls input:checked + label {
+        #ui-controls input:checked + label {
           background-color: red;
           box-shadow: none;
         }
 
-        .ui-controls label:first-of-type {
+        #ui-controls label:first-of-type {
           border-radius: 4px 0 0 4px;
         }
 
-        .ui-controls label:last-of-type {
+        #ui-controls label:last-of-type {
           border-radius: 0 4px 4px 0;
-        }
+        }*/
         .subtitle .min {
             float: left;
         }
@@ -153,10 +153,6 @@
             float: right;
             margin-right: -15px;
         }
-
-        .year-slider {
-            width: 100%;
-        }*/
 
         label {
             font-size: 1.1em;
@@ -172,7 +168,7 @@
 </header>
 <section>
   <div id="map"></div>
-  <div class="ui-controls">
+  <div id ="ui-controls">
     <input type="radio" id="radio-one" name="switch-one" checked="checked" />
     <label for="radio-one">2014</label>
     <input type="radio" id="radio-two" name="switch-one"  />
@@ -298,7 +294,7 @@
        },
       }).addTo(map);
       updateMap(dataLayer, colorize, '2014');
-      createButtonUI(dataLayer, colorize);
+      //addUI()
      
     } // end function drawMap()
 
@@ -343,15 +339,19 @@
 
       } // end drawLegend()
 
-      function createButtonUI(dayaLayer, colorize) {
+      function addUI() {
         var buttonControl = L.control({
           position: 'topleft'
         });
-        buttonControl.onAdd = function(map){
-          return L.DomUtil.get("ui-controls");
-          selectControl.addTo(map);
+
+        buttonControl.onAdd = function(map) {
+          var button = L.DomUtil.get("ui-controls");
+          return button;
         }
-      } // end createSliderUI()
+
+        buttonControl.addTo(map);
+
+      } // end createSliderUI()*/
 
 
 
