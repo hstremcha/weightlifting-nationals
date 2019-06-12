@@ -7,47 +7,58 @@
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+
   <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 
   <style>
     body {
             margin: 0;
             padding: 0;
-            background: #152C53;
+            /*background: #152C53;*/
+            background-image: linear-gradient(#152C53, #f1f1f2);
             font-family: Lato, sans-serif;
             color: #0D0000;
         }
-    header {
-          width: 90%;
-          /*margin: 5% auto;*/
-          padding-left: 5%;
-          padding-right: 5%;
-    }
-        h1 {
-          display: inline-block;
-          z-index: 650;
-          top: 0px;
-          left: 0px;
-          right: 0px;
-          padding: 10px 10px;
-          color: whitesmoke;
-          font-size: 2em;
-          /*background: #152C53;*/
-          border-radius: 0px;
+      .header {
+          margin-top: 6rem;
+          text-align: center; 
+        }
+
+      .info {
           text-align: center;
+          padding: 8px 5px;
+          /*border: 2px solid rgba(244, 244, 244, 0.2);*/
+          background: rgb(180, 0, 0);
+          color: white;
+          border-radius: 5px;
+          margin-top: 10px;
+          z-index: 9999;
+      }
+        h1 {
+          color: whitesmoke;
           
         }
 
         h2 {
-            display: inline-block;
-            color: white;
-            text-align: center;
+            
+            color: rgb(160, 160, 160);
+            
+        }
+
+        h3 {
+            
+            color: red;
+            
+            
         }
 
         #map {
             width: 100%;
             height: 720px;
-
+            border: 5px solid white;
+             border-radius: 5px;
         }
 
         .subtitle {
@@ -63,6 +74,19 @@
             font-size: 1em;
             color: #001323;
         }
+
+        .information {
+          text-align: left;
+          padding: 8px 5px;
+          border: 2px solid rgba(244, 244, 244, 0.2);
+          background: white;
+          color: black;
+          border-radius: 5px;
+          margin-top: 10px;
+          z-index: 9999;
+      }
+
+        
         .legend {
             padding: 6px 8px;
             font-size: 1em;
@@ -108,16 +132,14 @@
         }
 
         #ui-controls {
-            width: 90
-            %;
+            width: 800px;
             padding: 8px 25px 8px 15px;
-            background: rgba(75, 75, 75, 1);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            border-radius: 0px;
+            border: 0px solid gray;
+            background: rgba(75, 75, 75, 0.8);
+            border-radius: 5px;
             color: whitesmoke;
-          }
-
-        #ui-controls::
+        }
+        
         #ui-controls .min {
             float: left;
             
@@ -125,14 +147,35 @@
 
         #ui-controls .max {
             float: right;
-            margin-right: -15px;
+            margin-right: 15px;
         }
 
-        .year-slider {
-            width: 95%;
-            padding: 0;
-            margin: 0;
+       .year-slider {
+          -webkit-appearance: none;
+          width: 100%;
+          padding: 0px;
+          margin: 5px;
+          
         }
+
+        .year-slider::-webkit-slider-runnable-track {
+          width: 800px;
+          height: 5px;
+          background: whitesmoke;
+          border: none;
+          border-radius: 5px;
+          tick
+        }
+
+        .year-slider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          border: none;
+          height: 16px;
+          width: 16px;
+          border-radius: 50%;
+          background: red;
+          margin-top: -4px;
+}
 
         label {
             font-size: 1.1em;
@@ -142,18 +185,48 @@
 </head>
 
 <body>
-  <header>
-  <h1>Where are strongest Weightlifters in America From?</h1><br>
-  <h2>USAW National Championship Participation by State: 2014-2019</h2>
-</header>
-<section>
-  <div id="map"></div>
+  <div class="container">
+    <section class="header">
+      <div class="twelve columns">
+      <h1 class="title">
+      Where are strongest Weightlifters in America From? <br>
+      </h1>
+      <h2>USAW National Championship Participation by State: 2014-2019</h2>
+      </div>
+    </section>
+
+    <div class="row">
+      <div id="map" class="six columns"></div>
+    </div> <!--close out row for map -->
+
+    <section class="row">
+      <div class="six columns">
+        <h3 class="info">Data Source and Method</h3>
+        
+        <p class="information">This map shows the number of weightlifters who attended...   Data from <a
+            target="_blank" href="https://www.census.gov/topics/employment/labor-force/about/glossary.html">definitions</a>
+          used to classify the labor force are as follows:</p>
+          <ul class="information">
+            <li>Map authored by: Hope Stremcha</li>
+            <li>Created: April 2019</li>
+            <li>Data source: <a target="_blank" href="https://factfinder.census.gov">United States Census Bureau</a></li>
+          </ul>
+      </div>
+      <div class="six columns u-pull-right">
+        <h3 class="info">More Information</h3>
+        <p class="information">
+          jilkad flating </p>
+      </div> 
+    </section>
+
+  </div> <!--close out container-->
+
   <div id ="ui-controls">
     <label><span class="min">2014</span><span class="max">2019</span>
-    <input type="range" min="2014", max="2019", step="1" class="year-slider" >
+    <input type="range" min="2014", max="2019", value="2014", step="1" class="year-slider" >
     </label>
   </div>
-  </section>
+  
   
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -182,7 +255,7 @@
     }).addTo(map);
 
     var zoom = L.control.zoom({
-         position: 'bottomleft'
+         position: 'topleft'
          }).addTo(map);
 
     // AJAX request for GeoJSON data
@@ -243,7 +316,7 @@
           } //end if
         }// end loop
       });
-      var breaks = chroma.limits(rates, 'k', 5);
+      var breaks = chroma.limits(rates, 'q', 5);
 
       var colorize = chroma.scale(chroma.brewer.Blues).classes(breaks).mode('lab');
       drawMap(states, colorize);
@@ -263,6 +336,29 @@
            fillColor: 'blue'
           };
        },
+      onEachFeature: function (feature, layer) {
+
+          // when mousing over a layer
+          layer.on('mouseover', function () {
+
+            // change the stroke color and bring that element to the front
+            layer.setStyle({
+              color: 'red'
+            }).bringToFront();
+          });
+
+          // on mousing off layer
+          layer.on('mouseout', function () {
+
+            // reset the layer style to its original stroke color
+            layer.setStyle({
+              color: '#1e1e1e'
+            });
+          });
+
+        }
+
+
       }).addTo(map);
       updateMap(dataLayer, colorize, '2014');
       addUI(dataLayer, colorize);
@@ -278,12 +374,13 @@
         layer.setStyle({
           fillColor: colorize(Number(props[currentYear]))
         });
+        layer.bindTooltip("<b>" + layer.feature.properties.Name + "</b><br>" + layer.feature.properties[currentYear] + " Weightlifters");
       }) 
     }// end updateMap()
 
     function drawLegend(breaks, colorize) {
         var legendControl = L.control({
-        position: 'bottomright'
+        position: 'topright'
       });
       legendControl.onAdd = function (map) {
 
@@ -293,7 +390,7 @@
       };
 
       legendControl.addTo(map);
-        var legend = $('.legend').html("<h3><span>2014</span> # Weightlifters per State at Nationals</h3><ul>");
+        var legend = $('.legend').html("<h3><span>2014</span><br># Weightlifters per State at Nationals</h3><ul>");
 
       for (var i = 0; i < breaks.length - 1; i++) {
 
@@ -312,7 +409,7 @@
 
       function addUI(dataLayer, colorize) {
         var sliderControl = L.control({
-          position: 'topleft'
+          position: 'bottomleft'
         });
 
         sliderControl.onAdd = function(map) {
@@ -329,7 +426,7 @@
             $('.legend h3 span').html(currentYear);
             updateMap(dataLayer, colorize, currentYear);
           });
-        sliderControl.addTo(map);
+        sliderControl.addTo(map); 
 
       } // end createSliderUI()*/
 
