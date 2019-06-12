@@ -18,7 +18,10 @@
             color: #0D0000;
         }
     header {
-          width: 100%;
+          width: 90%;
+          /*margin: 5% auto;*/
+          padding-left: 5%;
+          padding-right: 5%;
     }
         h1 {
           display: inline-block;
@@ -29,7 +32,7 @@
           padding: 10px 10px;
           color: whitesmoke;
           font-size: 2em;
-          background: #152C53;
+          /*background: #152C53;*/
           border-radius: 0px;
           text-align: center;
           
@@ -38,6 +41,7 @@
         h2 {
             display: inline-block;
             color: white;
+            text-align: center;
         }
 
         #map {
@@ -104,16 +108,19 @@
         }
 
         #ui-controls {
-            width: 100%;
+            width: 90
+            %;
             padding: 8px 25px 8px 15px;
-            background: rgba(75, 75, 75, 0.8);
+            background: rgba(75, 75, 75, 1);
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
+            border-radius: 0px;
             color: whitesmoke;
-        }
+          }
 
+        #ui-controls::
         #ui-controls .min {
             float: left;
+            
         }
 
         #ui-controls .max {
@@ -122,7 +129,9 @@
         }
 
         .year-slider {
-            width: 100%;
+            width: 95%;
+            padding: 0;
+            margin: 0;
         }
 
         label {
@@ -140,8 +149,9 @@
 <section>
   <div id="map"></div>
   <div id ="ui-controls">
+    <label><span class="min">2014</span><span class="max">2019</span>
     <input type="range" min="2014", max="2019", step="1" class="year-slider" >
-    
+    </label>
   </div>
   </section>
   
@@ -189,7 +199,7 @@
 
       }); // end of Papa.parse()
       
-     })
+     }) // end of getJSON
 
     .fail(function() {
       console.log("the data file failed to load")
@@ -313,7 +323,7 @@
          L.DomEvent.disableClickPropagation(slider);
           return slider;
         }
-        $("year-slider")
+        $(".year-slider")
           .on("input change", function(){
             var currentYear = this.value
             $('.legend h3 span').html(currentYear);
