@@ -132,7 +132,7 @@
         }
 
         #ui-controls {
-            width: 800px;
+            
             padding: 8px 25px 8px 15px;
             border: 0px solid gray;
             background: rgba(75, 75, 75, 0.8);
@@ -152,7 +152,7 @@
 
        .year-slider {
           -webkit-appearance: none;
-          width: 100%;
+          
           padding: 0px;
           margin: 5px;
           
@@ -189,7 +189,7 @@
     <section class="header">
       <div class="twelve columns">
       <h1 class="title">
-      Where are strongest Weightlifters in America From? <br>
+      Where are the strongest Weightlifters in America From? <br>
       </h1>
       <h2>USAW National Championship Participation by State: 2014-2019</h2>
       </div>
@@ -204,8 +204,8 @@
         <h3 class="info">Data Source and Method</h3>
         
         <p class="information">This map shows the number of weightlifters who attended...   Data from <a
-            target="_blank" href="https://www.census.gov/topics/employment/labor-force/about/glossary.html">definitions</a>
-          used to classify the labor force are as follows:</p>
+            target="_blank" href="https://www.census.gov/topics/employment/labor-force/about/glossary.html">USA Weightlifting</a>
+          meet results.</p>
           <ul class="information">
             <li>Map authored by: Hope Stremcha</li>
             <li>Created: April 2019</li>
@@ -219,13 +219,16 @@
       </div> 
     </section>
 
-  </div> <!--close out container-->
-
-  <div id ="ui-controls">
+ 
+    <div class="row">
+  <div id ="ui-controls" class="six columns">
     <label><span class="min">2014</span><span class="max">2019</span>
     <input type="range" min="2014", max="2019", value="2014", step="1" class="year-slider" >
-    </label>
-  </div>
+    </label> 
+  </div> <!--close ui controls-->
+  </div> <!--close row-->
+  </div> <!--close out container-->
+  
   
   
 
@@ -241,7 +244,7 @@
       dragging: true,
       zoomControl: false,
       center: [38, -98],
-      zoom: 4
+      zoom: 3
     }
 
     // create the Leaflet map
