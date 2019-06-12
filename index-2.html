@@ -85,7 +85,7 @@
           z-index: 9999;
       }
 
-        }
+        
         .legend {
             padding: 6px 8px;
             font-size: 1em;
@@ -133,10 +133,10 @@
         #ui-controls {
             width: 800px;
             padding: 8px 25px 8px 15px;
-            border: 2px solid rgba(244, 244, 244, 0.2);
-            background: rgba(100, 100, 100, 0.9);
+            border: 0px solid gray;
+            background: rgba(75, 75, 75, 0.8);
             border-radius: 5px;
-            color: white;
+            color: whitesmoke;
         }
         
         #ui-controls .min {
@@ -160,7 +160,7 @@
         .year-slider::-webkit-slider-runnable-track {
           width: 800px;
           height: 5px;
-          background: rgba(244, 244, 244, 0.8);
+          background: whitesmoke;
           border: none;
           border-radius: 5px;
           tick
@@ -222,7 +222,7 @@
 
   <div id ="ui-controls">
     <label><span class="min">2014</span><span class="max">2019</span>
-    <input type="range" min="2014", max="2019", step="1" class="year-slider" >
+    <input type="range" min="2014", max="2019", value="2014", step="1" class="year-slider" >
     </label>
   </div>
   
@@ -315,7 +315,7 @@
           } //end if
         }// end loop
       });
-      var breaks = chroma.limits(rates, 'k', 5);
+      var breaks = chroma.limits(rates, 'q', 5);
 
       var colorize = chroma.scale(chroma.brewer.Blues).classes(breaks).mode('lab');
       drawMap(states, colorize);
@@ -335,6 +335,29 @@
            fillColor: 'blue'
           };
        },
+      onEachFeature: function (feature, layer) {
+
+          // when mousing over a layer
+          layer.on('mouseover', function () {
+
+            // change the stroke color and bring that element to the front
+            layer.setStyle({
+              color: 'red'
+            }).bringToFront();
+          });
+
+          // on mousing off layer
+          layer.on('mouseout', function () {
+
+            // reset the layer style to its original stroke color
+            layer.setStyle({
+              color: '#1e1e1e'
+            });
+          });
+
+        }
+
+
       }).addTo(map);
       updateMap(dataLayer, colorize, '2014');
       addUI(dataLayer, colorize);
@@ -350,6 +373,7 @@
         layer.setStyle({
           fillColor: colorize(Number(props[currentYear]))
         });
+        layer.bindTooltip("<b>" + layer.feature.properties.Name + "</b><br>" + layer.feature.properties[currentYear] + " Weightlifters");
       }) 
     }// end updateMap()
 
@@ -365,7 +389,7 @@
       };
 
       legendControl.addTo(map);
-        var legend = $('.legend').html("<h3><span>2014<br></span> # Weightlifters per State at Nationals</h3><ul>");
+        var legend = $('.legend').html("<h3><span>2014</span><br># Weightlifters per State at Nationals</h3><ul>");
 
       for (var i = 0; i < breaks.length - 1; i++) {
 
