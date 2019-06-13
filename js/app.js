@@ -84,7 +84,7 @@
           } //end if
         }// end loop
       });
-      var breaks = chroma.limits(rates, 'q', 6);
+      var breaks = chroma.limits(rates, 'q', 5);
 
       var colorize = chroma.scale(chroma.brewer.Blues).classes(breaks).mode('lab');
       drawMap(states, colorize);
@@ -158,7 +158,7 @@
       };
 
       legendControl.addTo(map);
-      var legend = $('.legend').html("<h3><span>2014</span></h3><br>% of State Population at USAW Nationls<br><ul>");
+      var legend = $('.legend').html("<h3><span>2014</span></h3><br>% of State Population at USAW Nationals<br><ul>");
 
       for (var i = 0; i < breaks.length - 1; i++) {
 
