@@ -5,6 +5,7 @@
   <meta charset=utf-8 />
   <title>USAW National Championship participation</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <link rel='icon' href='https://newmapsplus.github.io/favicon.ico' type='image/x-icon' />
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
@@ -20,7 +21,7 @@
   <div class="container">
     <section class="header">
       <div class="twelve columns">
-        <h1 class="title">Where are the strongest Weightlifters in America From?<br></h1>
+        <h1 class="title">Where are the Strongest Weightlifters in America From?<br></h1>
         <h2>USAW National Championship Participation by Percentage of State Population: 2014-2019</h2>
       </div>
     </section>
@@ -29,24 +30,53 @@
       <div id="map" class="twelve columns"></div>
     </div> <!--close out row for map -->
   
-    <section class="row">
+    <section class="box">
       <div class="six columns">
-        <h3 class="info">Data Source and Method</h3>
+        <h3 class="author">Info</h3>
+           <p class="information">USA Weightlifting is the US's governing body for the Olympic sport of Weightlifting, under the International Weightlifting Federation.  From 2014-2019 the total number of lifters participating has remained relatively constant, due to increasing qualifying totals as the level of weightlifting increases across the country.  There has also been an emergence of remote athletes belonging to teams not in their geographic area.<br><br>This map shows the percentage of the population of each state that attended USA Weightlifting nationals for the years 2014-2019.</p>
         
-          <p class="information">This map shows the number of weightlifters who attended...   Data from <a
-            target="_blank" href="https://www.census.gov/topics/employment/labor-force/about/glossary.html">USA Weightlifting</a>
-            meet results.</p>
-           <ul class="information">
-            <li>Map authored by: Hope Stremcha</li>
-            <li>Created: June 2019</li>
-            <li>Data source: <a target="_blank" href="https://factfinder.census.gov">United States Census Bureau</a></li>
-          </ul>
+        <h3 class="author">Method</h3>
+           <p class="information">The data was downloaded from the sources below, compiled into one dataset, and analyzed to calculate the percentage, by finding the number of lifters per state (from <a href="https:www.teamusa.org/usa-weightlifting">USA Weightlifting</a>), and the estimated population for each year (from the <a href="https://factfinder.census.gov">Census Bureau</a>).  The final dataset was loaded into this page as a csv file.<br><br>This page was build with a <a href="#">Skeleton</a> boilerplate, and is hosted on <a href="#">Github</a> pages.  </p>
       </div>
+
       <div class="six columns u-pull-right">
-        <h3 class="info">More Information</h3>
-        <p class="information">
-          jilkad flating </p>
+        <h3 class="author">Data Sources</h3>
+            <ul class="information"> Data Sources
+               <li><a target="_blank" href="https://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?src=bkmk">United States Census Bureau</a></li>
+                <li><a target="_blank" href="https://www.teamusa.org/usa-weightlifting/resources/results-archive#2014/">2014 Weightlifting Data</a></li>
+                <li><a target="_blank" href="https://www.teamusa.org/USA-Weightlifting/Events/2015/August/13/National-Championships">2015 Weightlifting Data</a></li>
+                <li><a target="_blank" href="https://www.teamusa.org/~/media/USA_Weightlifting/Documents/2016-Events/2016-National-Championships/05_04_16/01_Nationals_Olympic_Trials_Startlist.pdf?la=en">2016 Weightlifting Data</a></li>
+                <li><a target="_blank" href="https://webpoint.usaweightlifting.org/wp15/Events2/ViewEvt.wp?EventID=72434&isPopup=&Tab=Results">2017 Weightlifting Data</a></li>
+                <li><a target="_blank" href="https://webpoint.usaweightlifting.org/wp15/Events2/ViewEvt.wp?EventID=107989&isPopup=&Tab=Results">2018 Weightlifting Data</a></li>
+                <li><a target="_blank" href="https://webpoint.usaweightlifting.org/wp15/Events2/ViewEvt.wp?EventID=202863&isPopup=&Tab=Results">2019 Weightlifting Data</a></li>
+                <li><a target="_blank" href="https://www.teamusa.org/usa-weightlifting/clubs-lwc/find-a-club">USAW Club Finder</a></li>
+                Created: May/June 2019
+            </ul>
+
+        <h3 class="author">About the Author</h3>    
+            <ul class="information"> Map authored by: Hope Stremcha
+                <li><a href="https://hstremcha.github.io/">Portfolio</a></li>
+                <li><a href="https://github.com/hstremcha">GitHub</a></li>
+                <li><a href="https://www.linkedin.com/in/hope-stremcha-186420161/">LinkedIn</a></li>
+          </ul>
+        </p>
       </div> 
+    </section>
+
+    <section class="footer">
+      <div class="nine columns">
+      <hr>
+       
+      <a href="https://newmapsplus.github.io">
+        <img src="https://newmapsplus.github.io/assets/graphics/logo-2018-nmp-75px-h-gray.png"
+          alt="University of Kentucky Geography">
+      </a>
+    
+      <a href="https://uky-gis.github.io">
+        <img src="https://newmapsplus.github.io/assets/graphics/logo-2018-geography-75px-h.png"
+          alt="University of Kentucky Geography">
+      </a>
+      </div>
     </section>
 
     <div class="row">
@@ -54,9 +84,9 @@
         <div class="value">2014</div>
         <label><span class="min">2014</span><span class="max">2019</span>
         <input type="range" min="2014", max="2019", value="2014", step="1" class="year-slider" >
-      </label> 
-  </div> <!--close ui controls-->
-  </div> <!--close row-->
+        </label> 
+      </div> <!--close ui controls-->
+    </div> <!--close row-->
   </div> <!--close out container-->
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
