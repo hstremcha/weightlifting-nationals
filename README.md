@@ -1,4 +1,4 @@
-# weightlifting-nationals
+# Weightlifting Nationals
 
 My topic will now be athlete participation in USA Weightlifting (USAW) National Championship by state, from 2014-2019.  It will be a choropleth map by state, showing the number of weightlifters registered to a club in each state that competed at National Championships for the past 6 years.  A possible title for this is “Where are the Strongest Weightlifters in America From?: The Number of Athletes Attending USAW National Championships Representing each State from 2014-2019.”  The objective of this map is to show the incredible growth of USAW over the past 5 years, and to compare the states’ participation at nationals over time. 
 
