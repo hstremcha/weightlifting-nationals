@@ -118,7 +118,7 @@
             // reset the layer style to its original stroke color
             layer.setStyle({
               color: '#1e1e1e'
-            }); ;;end mou
+            }); 
           });
        } //end oneachfeature
 
