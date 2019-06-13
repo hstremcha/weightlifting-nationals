@@ -12,6 +12,12 @@
           text-align: center; 
       }
 
+      .footer { 
+        height: 50px;
+        width: 80%;
+        margin: 10px auto;
+      }
+
       .title2 {
           margin-top: 5rem;
           text-align: center; ;
@@ -27,6 +33,15 @@
           margin-top: 10px;
           z-index: 9999;
       }
+
+      .author {
+          text-align: center;
+          padding: 3px;
+          background: rgb(180,0,0);
+          color: whitesmoke;
+          border-radius: 5px;
+          margin-top: 10px;
+      }
       
       h1 {
           color: whitesmoke;
@@ -40,13 +55,22 @@
       h3 {            
           color: red;       
       }
-
+       
+      li {
+          line-height: 1.1em;
+      }
       #map {
           width: 100%;
           height: 720px;
           max-height: 500px;
           border: 5px solid white;
           border-radius: 5px;
+      }
+
+      .box {
+        margin-top: 60px;
+        padding-top: 50px; 
+        border-top: 5px solid gray;
       }
 
       .subtitle {
@@ -81,7 +105,7 @@
           color: whitesmoke;
           box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.2);
           border-radius: 5px;
-          width: 175px;
+          width: 110px;
       }
 
       .legend h3 {
@@ -89,7 +113,7 @@
           font-weight: bold;
           line-height: 1em;
           color: whitesmoke;
-          margin: auto;
+          margin: 0;
           text-align: center;
           text-shadow: 3px 3px 5px black;            
       }
@@ -122,7 +146,7 @@
       }
 
       #ui-controls {
-           width: 250px;
+          width: 250px;
           padding: 8px 25px 8px 15px;
           border: 0px solid gray;
           background: rgba(75, 75, 75, 0.8);
