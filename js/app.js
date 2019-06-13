@@ -29,22 +29,17 @@
     // AJAX request for GeoJSON data
     $.getJSON("data/states.geojson", function (states) {
       Papa.parse('data/participation-percentage.csv', {
-
         download: true,
         header: true,
         complete: function (data) {
-
           processData(states, data);
-
         }
-
       }); // end of Papa.parse()
-
     }) // end of getJSON
 
       .fail(function () {
         console.log("the data file failed to load")
-      }); // end of $.getJSON()
+      }); // show error if error in data
 
     function processData(states, data) {
       // loop through all the states
@@ -56,7 +51,7 @@
         // for each of the CSV data rows
         for (var j = 0; j < data.data.length; j++) {
 
-          // if the state fips code and data fips code match
+          // if the state fi code and data fips code match
           if (props.STATEFP === data.data[j].STATE_FIP) {
             //reassign the data for that state as the state's properties
             states.features[i].properties = data.data[j];
@@ -84,8 +79,10 @@
           } //end if
         }// end loop
       });
+      // create class breaks using chroma 
       var breaks = chroma.limits(rates, 'q', 5);
 
+      //assign colors to class breaks
       var colorize = chroma.scale(chroma.brewer.Blues).classes(breaks).mode('lab');
       drawMap(states, colorize);
       drawLegend(breaks, colorize);
@@ -121,10 +118,9 @@
             // reset the layer style to its original stroke color
             layer.setStyle({
               color: '#1e1e1e'
-            });
+            }); ;;end mou
           });
-
-        }
+       } //end oneachfeature
 
 
       }).addTo(map);
@@ -136,7 +132,7 @@
     function updateMap(dataLayer, colorize, currentYear) {
       //loop through each state
       dataLayer.eachLayer(function (layer) {
-
+        //shorthand properties
         var props = layer.feature.properties;
         // set the fill color of layer based on its normalized data value
         layer.setStyle({
@@ -147,6 +143,7 @@
     }// end updateMap()
 
     function drawLegend(breaks, colorize) {
+      // create legend control box
       var legendControl = L.control({
         position: 'topright'
       });
@@ -157,25 +154,28 @@
 
       };
 
-      legendControl.addTo(map);
+      legendControl.addTo(map);//add to map
+      //legend title
       var legend = $('.legend').html("<h3><span>2014</span></h3><br>% of State Population at USAW Nationals<br><ul>");
 
       for (var i = 0; i < breaks.length - 1; i++) {
 
         var color = colorize(breaks[i], breaks);
-
+        //make legend based on class breaks
         var classRange = '<li><span style="background:' + color + '"></span> ' +
           breaks[i].toLocaleString() + ' E-05' + ' &mdash; ' +
           breaks[i + 1].toLocaleString() + ' E-05' + '</li>'
 
         $('.legend ul').append(classRange);
-      }
+      } //end loop
 
       legend.append("</ul>");
 
     } // end drawLegend()
 
+    //call slider
     function addUI(dataLayer, colorize) {
+      //place sldier control in bottom left
       var sliderControl = L.control({
         position: 'bottomleft'
       });
@@ -188,6 +188,7 @@
         L.DomEvent.disableClickPropagation(slider);
         return slider;
       }
+      //update Legend title and slider label with currentYear
       $(".year-slider")
         .on("input change", function () {
           var currentYear = this.value
