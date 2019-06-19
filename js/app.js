@@ -138,7 +138,7 @@
         layer.setStyle({
           fillColor: colorize(Number(props[currentYear]))
         });
-        layer.bindTooltip("<b>" + layer.feature.properties.Name + "</b><br>" + layer.feature.properties[currentYear] + "E-05 % of state population");
+        layer.bindTooltip("<b>" + layer.feature.properties.Name + "</b><br>" +layer.feature.properties[currentYear] + "ppm of state population");
       })
     }// end updateMap()
 
@@ -156,15 +156,15 @@
 
       legendControl.addTo(map);//add to map
       //legend title
-      var legend = $('.legend').html("<h3><span>2014</span></h3><br>% of State Population at USAW Nationals<br><ul>");
+      var legend = $('.legend').html("<h3><span>2014</span></h3><br>PPM of State Population at USAW Nationals<br><ul>");
 
       for (var i = 0; i < breaks.length - 1; i++) {
 
         var color = colorize(breaks[i], breaks);
         //make legend based on class breaks
         var classRange = '<li><span style="background:' + color + '"></span> ' +
-          breaks[i].toLocaleString() + ' E-05' + ' &mdash; ' +
-          breaks[i + 1].toLocaleString() + ' E-05' + '</li>'
+          breaks[i].toLocaleString() + ' &mdash; ' +
+          breaks[i + 1].toLocaleString() +  '</li>'
 
         $('.legend ul').append(classRange);
       } //end loop
