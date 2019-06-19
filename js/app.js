@@ -138,7 +138,7 @@
         layer.setStyle({
           fillColor: colorize(Number(props[currentYear]))
         });
-        layer.bindTooltip("<b>" + layer.feature.properties.Name + "</b><br>" +layer.feature.properties[currentYear] + "ppm of state population");
+        layer.bindTooltip("<b>" + layer.feature.properties.Name + "</b><br>" +layer.feature.properties[currentYear] +    " ppm of state population");
       })
     }// end updateMap()
 
@@ -156,7 +156,7 @@
 
       legendControl.addTo(map);//add to map
       //legend title
-      var legend = $('.legend').html("<h3><span>2014</span></h3><br>PPM of State Population at USAW Nationals<br><ul>");
+      var legend = $('.legend').html("<h3><span>2014</span></h3><br>Lifters per Million of State Population at USAW Nationals<br><ul>");
 
       for (var i = 0; i < breaks.length - 1; i++) {
 
